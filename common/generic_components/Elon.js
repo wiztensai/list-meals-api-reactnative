@@ -1,45 +1,59 @@
-import {SafeAreaView, StyleSheet, View, Text} from 'react-native'
-import React, {Component, useState, useEffect} from 'react'
-import {useDispatch, useSelector} from 'react-redux'
+import { SafeAreaView, StyleSheet, View, Text } from 'react-native'
+import React, { Component, useState, useEffect } from 'react'
+import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
 
 
-// const ElonMusk = () => {
-//   // const data = useSelector(state => state.meals.value)
+const ElonMusk = () => {
+  // const data = useSelector(state => state.meals.value)
 
-//   useEffect(() => {
-//     axios.get("www.themealdb.com/api/json/v1/1/categories.php")
-//     .then(res => {
-//       console.log(res)
-//     }).catch(
-//       error => console.log(error)
-//       )
-//   })
+  const [data, setData] = useState("tes")
 
-//   return (
+  useEffect(() => {
+    fetch('https://reactnative.dev/movies.json')
+      .then((response) => response.json())
+      .then((json) => {
+        console.log(json)
+        setData(String(json.movies))
+        return json.movies;
+      })
+      .catch((error) => {
+        console.error(error);
+      });
+  })
 
-//     <Text>Elon Musk</Text>
+  return (
+    <SafeAreaView>
+      <Text>Elon Musk</Text>
+      <Text>{data}</Text>
+    </SafeAreaView>
 
-//   )
-// }
-
-class ElonMusk2 extends Component {
-  componentDidMount() {
-    axios.get("www.themealdb.com/api/json/v1/1/categories.php")
-    .then(res => {
-      console.log(res)
-    }).catch(
-      error => console.log(error)
-      )
-  }
-
-  render() {
-    return (
-      <Text>elon musk</Text>
-    )
-    
-  }
-
+  )
 }
 
-export default ElonMusk2
+// class ElonMusk2 extends Component {
+//   const [tes, setTes] 
+
+//   componentDidMount() {
+
+//     fetch('https://reactnative.dev/movies.json')
+//       .then((response) => response.json())
+//       .then((json) => {
+//         console.log(json)
+//         return json.movies;
+//       })
+//       .catch((error) => {
+//         console.error(error);
+//       });
+//   }
+
+//   render() {
+//     return (
+//       <Text>elon musk</Text>
+//     )
+
+//   }
+
+// }
+
+export default ElonMusk
