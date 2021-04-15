@@ -1,59 +1,49 @@
-import { SafeAreaView, StyleSheet, View, Text } from 'react-native'
+import { SafeAreaView, StyleSheet, View, Text, FlatList } from 'react-native'
 import React, { Component, useState, useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
-
+import { BASE_URL_MEAL } from '../../constants'
 
 const ElonMusk = () => {
-  // const data = useSelector(state => state.meals.value)
+  const tes1 = "https://reactnative.dev/movies.json"
+  const tes2 = `${BASE_URL_MEAL}/categories.php`
 
-  const [data, setData] = useState("tes")
+  const [categories, setCategories] = useState([])
 
-  useEffect(() => {
-    fetch('https://reactnative.dev/movies.json')
-      .then((response) => response.json())
-      .then((json) => {
-        console.log(json)
-        setData(String(json.movies))
-        return json.movies;
-      })
-      .catch((error) => {
-        console.error(error);
-      });
-  })
+  useEffect( async () => {
+    try {
+      let categories = await axios.get(tes1)
+      // setCategories(categories.data.categories)
+      setCategories(categories.data.movies)
+    } catch (error) {
+      console.error(error);
+    }
+  }, [])
 
   return (
-    <SafeAreaView>
+    <View>
       <Text>Elon Musk</Text>
-      <Text>{data}</Text>
-    </SafeAreaView>
+      {/* <FlatList
+
+        data={categories}
+        keyExtractor={i => i.item.idCategory}
+        renderItem={i => {
+          <Text>{i.item.strCategory}</Text>
+        }} /> */}
+
+      <FlatList
+        data={categories}
+        renderItem={({item}) => {
+          return <Text> {item.title} </Text>
+        }}
+        keyExtractor={(item, index) => {
+          return item.id
+        }}
+      />
+
+    </View>
 
   )
 }
-
-// class ElonMusk2 extends Component {
-//   const [tes, setTes] 
-
-//   componentDidMount() {
-
-//     fetch('https://reactnative.dev/movies.json')
-//       .then((response) => response.json())
-//       .then((json) => {
-//         console.log(json)
-//         return json.movies;
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-//   }
-
-//   render() {
-//     return (
-//       <Text>elon musk</Text>
-//     )
-
-//   }
-
-// }
 
 export default ElonMusk
